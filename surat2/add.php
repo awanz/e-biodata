@@ -24,7 +24,7 @@
     $db = new MySQLBase($dbhost, $dbname, $dbuser, $dbpass);
     $dataArray = $_POST;
     $dataArray['user_id'] = $_SESSION['user_id'];
-    $result = $db->insert("surat", $dataArray);
+    $result = $db->insert("surat2", $dataArray);
     if ($result['status'] == 0) {
       header("Location: add.php?status=".$result['status']."&message=".$result['message']);
     }else{
@@ -89,18 +89,21 @@
                           <input name="nama" class="form-control" type="text" placeholder="Nama" required>
                         </div>
                         <div class="form-group">
-                            <textarea placeholder="Alamat" class="form-control" name="alamat" id="alamat" rows="3" required></textarea>
-                        </div>
-                        <div class="form-group">
                             <textarea placeholder="Keperluan" class="form-control" name="keperluan" id="keperluan" rows="3" required></textarea>
                         </div>
                         <div class="form-group">
-                            <textarea placeholder="Alasan" class="form-control" name="alasan" id="alasan" rows="3" required></textarea>
+                            <textarea placeholder="Hal" class="form-control" name="hal" id="hal" rows="3" required></textarea>
                         </div>
                     </div>
                     <div class="col-lg-4">
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                           <input autocomplete="off" required class="form-control" name="tanggal" id="demoDate" type="text" placeholder="Tanggal">
+                        </div> -->
+                        <div class="form-group">
+                          <input name="email" class="form-control" type="text" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                          <input name="no_hp" class="form-control" type="text" placeholder="No HP" required>
                         </div>
                     </div>
                 </div>

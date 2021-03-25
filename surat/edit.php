@@ -100,6 +100,9 @@
                         <div class="form-group">
                             <textarea placeholder="Keperluan" class="form-control" name="keperluan" id="keperluan" rows="3" required><?= $dataEdit['keperluan'] ?></textarea>
                         </div>
+                        <div class="form-group">
+                            <textarea placeholder="Alasan" class="form-control" name="alasan" id="alasan" rows="3" required><?= $dataEdit['alasan'] ?></textarea>
+                        </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">

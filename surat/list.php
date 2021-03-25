@@ -113,6 +113,8 @@
                       ?>
                       <td><?= $statusText ?></td>
                       <td> 
+                        <a href="detail.php?id=<?= $r['id'] ?>">Detail</a> - 
+                        <a target="_BLANK" href="print.php?id=<?= $r['id'] ?>">Print</a> - 
                         <a href="edit.php?id=<?= $r['id'] ?>">Edit</a> - 
                         <a href="delete.php?id=<?= $r['id'] ?>" onclick="return confirm('Are you sure you want to delete this data?');">Delete</a>
                       </td>

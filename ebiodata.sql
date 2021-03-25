@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 23, 2021 at 03:45 PM
+-- Generation Time: Mar 24, 2021 at 05:16 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.10
 
@@ -56,9 +56,27 @@ CREATE TABLE `surat` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `nama` varchar(100) NOT NULL,
-  `keperluan` varchar(100) NOT NULL,
+  `keperluan` text NOT NULL,
+  `alasan` text NOT NULL,
   `alamat` text NOT NULL,
   `tanggal` date NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `surat2`
+--
+
+CREATE TABLE `surat2` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `nama` varchar(50) NOT NULL,
+  `no_hp` varchar(20) NOT NULL,
+  `hal` text NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `keperluan` text NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -82,7 +100,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `email`, `level`, `created_at`) VALUES
-(1, 'admin', '827ccb0eea8a706c4c34a16891f84e7b', 'admin@ebiodata.com', 1, '2021-03-23 11:54:15');
+(1, 'admin', '827ccb0eea8a706c4c34a16891f84e7b', 'admin@ebiodata.com', 2, '2021-03-23 11:54:15');
 
 --
 -- Indexes for dumped tables
@@ -98,6 +116,12 @@ ALTER TABLE `biodata`
 -- Indexes for table `surat`
 --
 ALTER TABLE `surat`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `surat2`
+--
+ALTER TABLE `surat2`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -120,6 +144,12 @@ ALTER TABLE `biodata`
 -- AUTO_INCREMENT for table `surat`
 --
 ALTER TABLE `surat`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `surat2`
+--
+ALTER TABLE `surat2`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --

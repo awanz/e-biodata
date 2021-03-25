@@ -118,6 +118,10 @@
         <div class="col-md-12">
           <form action="" method="POST" enctype="multipart/form-data">
             <div class="tile">
+            <div>
+              <a href="pdf.php?id=<?= $dataEdit['id'] ?>" class="btn btn-primary">Print</a>
+              <br><br>
+            </div>   
                 <?php 
                   if (!empty($notif)) {
                     if ($status == 0) {

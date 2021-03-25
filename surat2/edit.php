@@ -18,21 +18,27 @@
   }else{
     header("Location: ../index.php");
   }
-
+  include_once("../includes/mysqlbase.php");
+  $db = new MySQLBase($dbhost, $dbname, $dbuser, $dbpass);
   if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    include_once("../includes/mysqlbase.php");
-    $db = new MySQLBase($dbhost, $dbname, $dbuser, $dbpass);
+    
+    
     $dataArray = $_POST;
     $dataArray['user_id'] = $_SESSION['user_id'];
-    $result = $db->insert("surat", $dataArray);
+    $result = $db->update("surat2", $dataArray, 'id', $_SESSION['user_id']);
     if ($result['status'] == 0) {
-      header("Location: add.php?status=".$result['status']."&message=".$result['message']);
+      header("Location: edit.php?status=".$result['status']."&message=".$result['message']);
     }else{
       header("Location: list.php?status=".$result['status']."&message=".$result['message']);
+    }    
+  }else{
+    $resultData = $db->getBy("surat2", "id", $_SESSION['user_id']);
+    $dataEdit = null;
+    if ($resultData->num_rows) {
+        $dataEdit = $resultData->fetch_assoc();
+    }else{
+        header("Location: list.php?status=0&message=Data not found");
     }
-    
-    
-    
   }
 
 ?>
@@ -41,7 +47,7 @@
 <html lang="en">
   <head>
     <meta name="description" content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
-    <title>Surat Add</title>
+    <title>Surat Edit</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -62,7 +68,7 @@
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
           <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
           <li class="breadcrumb-item"><a href="#">Surat</a></li>
-          <li class="breadcrumb-item"><a href="#">Add</a></li>
+          <li class="breadcrumb-item"><a href="#">Edit</a></li>
         </ul>
       </div>
       <div class="row">
@@ -86,22 +92,31 @@
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="form-group">
-                          <input name="nama" class="form-control" type="text" placeholder="Nama" required>
+                          <input value="<?= $dataEdit['nama'] ?>" name="nama" class="form-control" type="text" placeholder="Nama" required>
                         </div>
                         <div class="form-group">
-                            <textarea placeholder="Alamat" class="form-control" name="alamat" id="alamat" rows="3" required></textarea>
+                            <textarea placeholder="Keperluan" class="form-control" name="keperluan" id="keperluan" rows="3" required><?= $dataEdit['keperluan'] ?></textarea>
                         </div>
                         <div class="form-group">
-                            <textarea placeholder="Keperluan" class="form-control" name="keperluan" id="keperluan" rows="3" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <textarea placeholder="Alasan" class="form-control" name="alasan" id="alasan" rows="3" required></textarea>
+                            <textarea placeholder="hal" class="form-control" name="hal" id="hal" rows="3" required><?= $dataEdit['hal'] ?></textarea>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
-                          <input autocomplete="off" required class="form-control" name="tanggal" id="demoDate" type="text" placeholder="Tanggal">
+                            <input value="<?= $dataEdit['email'] ?>" name="email" class="form-control" type="text" placeholder="Email" required>
+                          </div>
+                          <div class="form-group">
+                            <input value="<?= $dataEdit['no_hp'] ?>" name="no_hp" class="form-control" type="text" placeholder="No HP" required>
                         </div>
+                        <?php if($_SESSION['level'] == 2){ ?>
+                        <div class="form-group">
+                          <label>Status</label><br>
+                          <input <?php if($dataEdit['status'] == 1){ echo "checked"; } ?> type="radio" id="aktif" name="status" value="1">
+                          <label for="aktif">Aktif</label><br>
+                          <input <?php if($dataEdit['status'] == 0){ echo "checked"; } ?> type="radio" id="nonaktif" name="status" value="0">
+                          <label for="nonaktif">Tidak Aktif</label><br>
+                        </div>
+                        <?php } ?>
                     </div>
                 </div>
                 <div class="tile-footer">

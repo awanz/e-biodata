@@ -9,15 +9,15 @@
         header("Location: index.php");
     }
 
-    require('assets/plugins/fpdf/fpdf.php');
-    include_once("includes/config.php");
+    require('../assets/plugins/fpdf/fpdf.php');
+    include_once("../includes/config.php");
     $id = $_GET['id'];
     if (empty($id)) {
         header("Location: index.php");
     }
-    include_once("includes/mysqlbase.php");
+    include_once("../includes/mysqlbase.php");
     $db = new MySQLBase($dbhost, $dbname, $dbuser, $dbpass);
-    $result = $db->getBy("biodata", "id", $id);
+    $result = $db->getBy("surat2", "id", $id);
     
     if ($result->num_rows == 0) {
         header("Location: index.php");
@@ -27,27 +27,22 @@
     $pdf = new FPDF('P','cm',array(21,33));
     $pdf->AddPage();
     $pdf->SetFont('Times','B',16);
-    $pdf->Image('assets/images/biodata/'.$data['photo'],1,1,4,6);
 
-    $pdf->SetX(5.5);
-    $pdf->Cell(10,0.5,$data['fullname']);
+    $pdf->SetX(2);
+    $pdf->Cell(0,1,$data['nama']);
     $pdf->Ln(1);
     $pdf->SetFont('Times','',12);
 
-    $pdf->SetX(5.5);
-    $pdf->Cell(10,0,"NIK: " . $data['nik']);
+    $pdf->SetX(2);
+    $pdf->MultiCell(17,0.5, $data['email']." - ".$data['no_hp']);
     $pdf->Ln(0.8);
 
-    $pdf->SetX(5.5);
-    $pdf->Cell(10,0,"No Whatsapp: 0" . $data['whatsapp']);
+    $pdf->SetX(2);
+    $pdf->MultiCell(17,0.4,$data['hal']);
     $pdf->Ln(0.8);
-
-    $pdf->SetX(5.5);
-    $pdf->Cell(10,0,"Tempat Lahir: " . $data['tempat_lahir']);
-    $pdf->Ln(0.8);
-
-    $pdf->SetX(5.5);
-    $pdf->Cell(10,0,"Jenis Kelamin: " . $data['jenis_kelamin']);
+    
+    $pdf->SetX(2);
+    $pdf->MultiCell(17,0.4,$data['keperluan']);
     $pdf->Ln(0.8);
     
     $pdf->Output();
